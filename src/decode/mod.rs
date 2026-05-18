@@ -8,7 +8,7 @@ use std::io::Read;
 
 use lzma_rust2::Lzma2Reader;
 
-use crate::error::{LazippierError, LazippierResult};
+use crate::error::{XzippyError, XzippyResult};
 
 /// Decode the 7z LZMA2 properties byte into a dictionary size in bytes.
 ///
@@ -17,15 +17,15 @@ use crate::error::{LazippierError, LazippierResult};
 /// - `b < 40`  → `dict_size = (2 | (b & 1)) << ((b >> 1) + 11)`
 ///
 /// # Errors
-/// Returns [`LazippierError::InvalidProperties`] if `b > 40`.
-pub fn props_byte_to_dict_size(b: u8) -> LazippierResult<u32> {
+/// Returns [`XzippyError::InvalidProperties`] if `b > 40`.
+pub fn props_byte_to_dict_size(b: u8) -> XzippyResult<u32> {
     if b == 40 {
         return Ok(u32::MAX);
     }
     if b > 40 {
-        return Err(LazippierError::InvalidProperties(b));
+        return Err(XzippyError::InvalidProperties(b));
     }
-    Ok(((2u32 | (b as u32 & 1)) << ((b as u32 >> 1) + 11)) as u32)
+    Ok((2u32 | (b as u32 & 1)) << ((b as u32 >> 1) + 11))
 }
 
 /// Decompress raw LZMA2 data using a 7z-style 1-byte props blob.
@@ -40,9 +40,9 @@ pub fn decode_7z(
     input: &[u8],
     props_bytes: &[u8],
     _uncompressed_size: u64,
-) -> LazippierResult<Vec<u8>> {
+) -> XzippyResult<Vec<u8>> {
     if props_bytes.len() != 1 {
-        return Err(LazippierError::Backend(format!(
+        return Err(XzippyError::Backend(format!(
             "LZMA2 expects exactly 1 props byte, got {}",
             props_bytes.len()
         )));
@@ -52,7 +52,7 @@ pub fn decode_7z(
     let mut out = Vec::new();
     reader
         .read_to_end(&mut out)
-        .map_err(|e| LazippierError::Backend(e.to_string()))?;
+        .map_err(|e| XzippyError::Backend(e.to_string()))?;
     Ok(out)
 }
 

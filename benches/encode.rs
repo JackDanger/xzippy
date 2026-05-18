@@ -7,9 +7,7 @@ fn bench_encode(c: &mut Criterion) {
     let mut group = c.benchmark_group("encode");
     group.throughput(Throughput::Bytes(input.len() as u64));
     group.bench_function("lzma2_64k_zeros", |b| {
-        b.iter(|| {
-            lazippier::encode::encode_7z(black_box(&input), 262144).unwrap()
-        });
+        b.iter(|| xzippy::encode::encode_7z(black_box(&input), 262144).unwrap());
     });
     group.finish();
 }

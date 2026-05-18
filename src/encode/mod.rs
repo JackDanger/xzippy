@@ -7,7 +7,7 @@ use std::io::Write;
 
 use lzma_rust2::{Lzma2Options, Lzma2Writer, LzmaOptions};
 
-use crate::error::{LazippierError, LazippierResult};
+use crate::error::{XzippyError, XzippyResult};
 
 /// Encode the dictionary size as a 7z LZMA2 properties byte.
 ///
@@ -15,7 +15,7 @@ use crate::error::{LazippierError, LazippierResult};
 /// Returns `40` (meaning `UINT32_MAX`) if no smaller value fits.
 pub fn dict_size_to_props_byte(dict_size: u32) -> u8 {
     for b in 0u8..40 {
-        let candidate = ((2u32 | (b as u32 & 1)) << ((b as u32 >> 1) + 11)) as u32;
+        let candidate = (2u32 | (b as u32 & 1)) << ((b as u32 >> 1) + 11);
         if candidate >= dict_size {
             return b;
         }
@@ -31,7 +31,7 @@ pub fn dict_size_to_props_byte(dict_size: u32) -> u8 {
 ///
 /// # Errors
 /// Returns an error if compression fails.
-pub fn encode_7z(input: &[u8], dict_size: u32) -> LazippierResult<(Vec<u8>, Vec<u8>)> {
+pub fn encode_7z(input: &[u8], dict_size: u32) -> XzippyResult<(Vec<u8>, Vec<u8>)> {
     let props_byte = dict_size_to_props_byte(dict_size);
 
     let opts = Lzma2Options {
@@ -48,10 +48,10 @@ pub fn encode_7z(input: &[u8], dict_size: u32) -> LazippierResult<(Vec<u8>, Vec<
         let mut writer = Lzma2Writer::new(&mut compressed, opts);
         writer
             .write_all(input)
-            .map_err(|e| LazippierError::Backend(e.to_string()))?;
+            .map_err(|e| XzippyError::Backend(e.to_string()))?;
         writer
             .finish()
-            .map_err(|e| LazippierError::Backend(e.to_string()))?;
+            .map_err(|e| XzippyError::Backend(e.to_string()))?;
     }
 
     Ok((vec![props_byte], compressed))

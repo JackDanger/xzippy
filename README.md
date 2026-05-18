@@ -1,10 +1,10 @@
-# lazippier
+# xzippy
 
-Pure-Rust LZMA2 (Lempel-Ziv-Markov chain Algorithm v2) encoder/decoder, part of the
-[8z](https://github.com/JackDanger/7zippy) umbrella of pure-Rust compression codecs.
+Pure-Rust `.xz` format (LZMA2) encoder/decoder. Drop-in replacement for `xz`, `unxz`, and `xzcat`.
+Part of the [7zippy](https://github.com/JackDanger/7zippy) umbrella of pure-Rust compression tools.
 
 LZMA2 extends LZMA with multi-chunk streaming and optional uncompressed chunk passthrough.
-It is the primary compression method used in modern 7z archives.
+It is the primary compression method used in modern `.xz` files and 7z archives.
 
 See [STATUS.md](./STATUS.md) for the current implementation state.
 

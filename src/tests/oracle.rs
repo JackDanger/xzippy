@@ -1,4 +1,4 @@
-//! Oracle harness: compare lazippier's output against the reference `7zz` CLI.
+//! Oracle harness: compare xzippy's output against the reference `7zz` CLI.
 
 use std::process::Command;
 
@@ -23,6 +23,7 @@ fn which_7zz() -> Option<String> {
 }
 
 /// Skip the current test if `7zz` is not on PATH.
+#[allow(dead_code)]
 pub fn skip_if_no_7zz() -> bool {
     if which_7zz().is_none() {
         eprintln!("[skip] 7zz not found on PATH — oracle test skipped");
@@ -32,6 +33,7 @@ pub fn skip_if_no_7zz() -> bool {
 }
 
 /// Compress `input` with `7zz -m0=lzma2` and return the raw `.7z` archive bytes.
+#[allow(dead_code)]
 pub fn seven_zip_compress_lzma2(input: &[u8]) -> Vec<u8> {
     let sevenzip = which_7zz().expect("7zz not found");
     let dir = tempdir();
@@ -88,7 +90,7 @@ pub fn seven_zip_decompress(archive: &[u8]) -> Vec<u8> {
 }
 
 fn tempdir() -> std::path::PathBuf {
-    let dir = std::env::temp_dir().join(format!("lazippier-oracle-{}", std::process::id()));
+    let dir = std::env::temp_dir().join(format!("xzippy-oracle-{}", std::process::id()));
     std::fs::create_dir_all(&dir).expect("create tempdir");
     dir
 }
