@@ -1,15 +1,16 @@
-//! Round-trip tests for lazippier encode + decode.
+//! Round-trip tests for xzippy encode + decode.
 
 use super::fixtures;
 
-/// Verify a round-trip through lazippier's encode_7z / decode_7z.
+/// Verify a round-trip through xzippy's encode_7z / decode_7z.
 fn assert_round_trip(input: &[u8], dict_size: u32) {
-    let (props, compressed) = crate::encode::encode_7z(input, dict_size)
-        .unwrap_or_else(|e| panic!("encode failed: {e}"));
+    let (props, compressed) =
+        crate::encode::encode_7z(input, dict_size).unwrap_or_else(|e| panic!("encode failed: {e}"));
     let decompressed = crate::decode::decode_7z(&compressed, &props, input.len() as u64)
         .unwrap_or_else(|e| panic!("decode failed: {e}"));
     assert_eq!(
-        decompressed, input,
+        decompressed,
+        input,
         "round-trip mismatch for {} bytes",
         input.len()
     );

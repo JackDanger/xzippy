@@ -1,4 +1,4 @@
-# lazippier STATUS
+# xzippy STATUS
 
 **Current focus:** Phase 1 wrapper complete (lzma-rust2 backend). Phase 2: native LZMA2 chunk-orchestration impl.
 
@@ -16,6 +16,6 @@
 | fuzz | ⬜ |
 
 **Phase 1 backend:** `lzma-rust2 v0.16` (pure-Rust LZMA2 `Lzma2Writer` + `Lzma2Reader`).
-**Phase 2:** Replace with lazippier's own chunk-orchestration implementation.
+**Phase 2:** Replace with xzippy's own chunk-orchestration implementation.
 
 Symbols: ⬜ not started, 🟡 in progress, ✅ done, ❌ blocked.

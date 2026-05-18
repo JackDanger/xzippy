@@ -1,4 +1,4 @@
-//! lazippier — Pure-Rust LZMA2 (Lempel-Ziv-Markov chain Algorithm v2), part of the 8z umbrella.
+//! xzippy — Pure-Rust `.xz` format (LZMA2). Drop-in for xz/unxz/xzcat. Part of the 7zippy umbrella.
 //!
 //! LZMA2 extends LZMA with multi-chunk streaming and optional uncompressed chunk passthrough.
 //! The 7z codec method ID is `[0x21]` with a 1-byte properties blob encoding the dictionary size.
@@ -13,7 +13,7 @@
 //! ## Phase 1 vs Phase 2
 //!
 //! Phase 1 wraps `lzma-rust2`'s `Lzma2Writer`/`Lzma2Reader`. Phase 2 will replace
-//! these with lazippier's own native chunk-orchestration implementation.
+//! these with xzippy's own native chunk-orchestration implementation.
 
 #![deny(unsafe_op_in_unsafe_fn)]
 

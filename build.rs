@@ -1,4 +1,4 @@
-//! Build script for lazippier.
+//! Build script for xzippy.
 //!
 //! Idempotently installs git hooks from scripts/ into .git/hooks/ on every
 //! `cargo build`. The hooks enforce formatting and prevent direct pushes to main.

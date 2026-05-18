@@ -2,9 +2,9 @@ use std::fmt;
 use std::io;
 use thiserror::Error;
 
-/// All errors produced by lazippier.
+/// All errors produced by xzippy.
 #[derive(Error, Debug)]
-pub enum LazippierError {
+pub enum XzippyError {
     /// Returned by every stub until the real implementation lands.
     #[error("not yet implemented")]
     NotYetImplemented,
@@ -26,12 +26,12 @@ pub enum LazippierError {
     Truncated,
 }
 
-impl LazippierError {
-    /// Construct a [`Backend`](LazippierError::Backend) error from any `Display` value.
+impl XzippyError {
+    /// Construct a [`Backend`](XzippyError::Backend) error from any `Display` value.
     pub fn backend<T: fmt::Display>(msg: T) -> Self {
-        LazippierError::Backend(msg.to_string())
+        XzippyError::Backend(msg.to_string())
     }
 }
 
-/// Convenience alias used throughout lazippier.
-pub type LazippierResult<T> = Result<T, LazippierError>;
+/// Convenience alias used throughout xzippy.
+pub type XzippyResult<T> = Result<T, XzippyError>;
